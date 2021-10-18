@@ -1,0 +1,53 @@
+﻿@model X.PagedList.PagedList<LojaVirtual.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categorias</h1>
+
+<a asp-action="Cadastrar" class="btn btn-primary">Cadastrar </a>
+<br />
+<br />
+
+@if (TempData["MSG_SUCESSO"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+}
+
+
+@if (Model.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().Nome)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().IdCategoriaPai)</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Nome</td>
+                        <td> <span> @Html.DisplayFor(m => item.CategoriaPai.Id) - @Html.DisplayFor(m => item.CategoriaPai.Nome)</span> </td>
+                        <td>
+                            <a asp-action="Atualizar" asp-route-id="@item.Id" class="btn btn-info">Atualizar</a>
+                            <a asp-action="Excluir" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <span> Nenum registro encontrado</span>
+}
+
+@Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina }))
