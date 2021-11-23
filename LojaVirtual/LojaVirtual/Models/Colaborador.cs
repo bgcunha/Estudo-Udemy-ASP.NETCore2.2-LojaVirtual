@@ -32,7 +32,7 @@ namespace LojaVirtual.Models
         public string ConfirmacaoDeSenha { get; set; }
 
         /// <summary>
-        /// C=Comum, G=Gerente
+        /// Tipo = ColaboradorTipoConstant;
         /// </summary>
         //[Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Tipo { get; set; }

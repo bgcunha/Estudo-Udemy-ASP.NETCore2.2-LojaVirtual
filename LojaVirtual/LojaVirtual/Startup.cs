@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Controllers.Libraries;
 using LojaVirtual.Controllers.Libraries.Login;
+using LojaVirtual.Controllers.Libraries.Middleware;
 using LojaVirtual.Controllers.Libraries.Sessao;
 using LojaVirtual.Database;
 using LojaVirtual.Models;
@@ -33,6 +34,8 @@ namespace LojaVirtual
             services.AddScoped<IRepositoryColaborador, RepositoryColaborador>();
             services.AddScoped<IRepositoryNewsLatterEmail, NewsLatterRepository>();
             services.AddScoped<IRepositoryCategoria, RepositoryCategoria>();
+            services.AddScoped<IRepositoryProduto, RepositoryProduto>();
+            services.AddScoped<IRepositoryImagem, RepositoryImagem>();
 
 
             /*
@@ -99,6 +102,7 @@ namespace LojaVirtual
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
 
             
             app.UseMvc(routes =>

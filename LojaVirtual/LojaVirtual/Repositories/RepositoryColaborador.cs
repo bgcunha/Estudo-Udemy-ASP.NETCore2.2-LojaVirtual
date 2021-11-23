@@ -1,6 +1,7 @@
 ﻿
 using LojaVirtual.Database;
 using LojaVirtual.Models;
+using LojaVirtual.Models.Constants;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -72,16 +73,17 @@ namespace LojaVirtual.Repositories
         //    return _context.Colaboradores.ToList();
         //}
 
-        public IPagedList<Colaborador> ObterTodosColaboradores(int? pagina)
-        {
-            var numeroPagina = pagina ?? 1;
-
-            return _context.Colaboradores.Where(x => x.Tipo != "G").ToPagedList<Colaborador>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
-        }
-
         public List<Colaborador> ObterPorEmail(string email)
         {
             return _context.Colaboradores.Where(X => X.Email.Equals(email)).AsNoTracking().ToList();
+        }
+
+        public IPagedList<Colaborador> ObterTodos(int? pagina)
+        {
+            var numeroPagina = pagina ?? 1;
+
+            return _context.Colaboradores.Where(x => x.Tipo != ColaboradorTipoConstant.Gerente).ToPagedList<Colaborador>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
+
         }
     }
 }

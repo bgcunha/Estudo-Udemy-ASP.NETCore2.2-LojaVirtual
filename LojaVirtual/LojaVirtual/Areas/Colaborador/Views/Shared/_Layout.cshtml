@@ -85,7 +85,7 @@
                             </a>
                         </li>
 
-                        @if (loginColaborador.GetColaborador().Tipo.Equals("G"))
+                        @if (loginColaborador.GetColaborador().Tipo == ColaboradorTipoConstant.Gerente)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Colaborador" asp-action="Index">
@@ -96,7 +96,7 @@
 
                         }
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="Cliente" asp-action="Index">
                                 <span data-feather="users"></span>
                                 Clientes
                             </a>

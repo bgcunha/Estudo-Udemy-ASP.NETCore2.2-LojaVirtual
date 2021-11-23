@@ -22,7 +22,7 @@ namespace LojaVirtual.Repositories.Contracts
 
         List<Colaborador> ObterPorEmail(string email);
 
-        IPagedList<Colaborador> ObterTodosColaboradores(int? pagina);
+        IPagedList<Colaborador> ObterTodos(int? pagina);
 
     }
 }

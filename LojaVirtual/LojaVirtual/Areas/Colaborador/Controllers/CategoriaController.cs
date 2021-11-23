@@ -33,7 +33,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost]        
         public IActionResult Cadastrar([FromForm] Categoria categoria)
         {
             if (ModelState.IsValid)
@@ -74,6 +74,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View();
         }
 
+        [ValidateHttpReferer]
         public IActionResult Excluir(int id)
         {
             _repositoryCategoria.Excluir(id);

@@ -1,17 +1,22 @@
 ﻿using LojaVirtual.Database;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
+using X.PagedList;
 
 namespace LojaVirtual.Repositories
 {
     public class RepositoryCliente : IRepositoryCliente
     {
         private LojaVirtualContext _context;
-        public RepositoryCliente(LojaVirtualContext context)
+        private IConfiguration _config;
+
+        public RepositoryCliente(LojaVirtualContext context, IConfiguration configuration)
         {
             this._context = context;
+            this._config = configuration;
         }
 
         public Cliente Login(string email, string senha)
@@ -44,9 +49,19 @@ namespace LojaVirtual.Repositories
         {
             return _context.Clientes.Find(id);
         }
-        public IEnumerable<Cliente> ObterTodos()
+        public IPagedList<Cliente> ObterTodos(int? pagina, string pesquisa)
         {
-            return _context.Clientes.ToList();
+            var numeroPagina = pagina ?? 1;
+
+            
+            if (string.IsNullOrEmpty(pesquisa))
+            {
+                return _context.Clientes.ToPagedList<Cliente>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
+            }
+
+            pesquisa = pesquisa.Trim();
+            return _context.Clientes.Where(x => x.Nome.Contains(pesquisa) || x.Email.Contains(pesquisa)).ToPagedList<Cliente>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
+            
         }
     }
 }

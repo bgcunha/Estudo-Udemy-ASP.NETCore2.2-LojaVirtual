@@ -4,14 +4,16 @@ using LojaVirtual.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    partial class LojaVirtualContextModelSnapshot : ModelSnapshot
+    [Migration("20211113181212_ClienteAddSituacao")]
+    partial class ClienteAddSituacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,23 +97,6 @@ namespace LojaVirtual.Migrations
                     b.ToTable("Colaboradores");
                 });
 
-            modelBuilder.Entity("LojaVirtual.Models.Imagem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Caminho");
-
-                    b.Property<int>("ProdutoId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("Imagens");
-                });
-
             modelBuilder.Entity("LojaVirtual.Models.NewsLatterEmail", b =>
                 {
                     b.Property<int>("Id")
@@ -126,58 +111,11 @@ namespace LojaVirtual.Migrations
                     b.ToTable("NewsLatterEmails");
                 });
 
-            modelBuilder.Entity("LojaVirtual.Models.Produto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoriaId");
-
-                    b.Property<string>("Descricao");
-
-                    b.Property<string>("Nome");
-
-                    b.Property<double>("Peso");
-
-                    b.Property<int>("Quantidade");
-
-                    b.Property<decimal>("Valor");
-
-                    b.Property<int>("altura");
-
-                    b.Property<int>("largura");
-
-                    b.Property<int>("profundidade");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoriaId");
-
-                    b.ToTable("Produtos");
-                });
-
             modelBuilder.Entity("LojaVirtual.Models.Categoria", b =>
                 {
                     b.HasOne("LojaVirtual.Models.Categoria", "CategoriaPai")
                         .WithMany()
                         .HasForeignKey("IdCategoriaPai");
-                });
-
-            modelBuilder.Entity("LojaVirtual.Models.Imagem", b =>
-                {
-                    b.HasOne("LojaVirtual.Models.Produto", "Produto")
-                        .WithMany("Imagens")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("LojaVirtual.Models.Produto", b =>
-                {
-                    b.HasOne("LojaVirtual.Models.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

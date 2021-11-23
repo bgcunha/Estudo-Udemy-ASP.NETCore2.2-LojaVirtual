@@ -142,8 +142,7 @@ namespace LojaVirtual.Controllers
         public IActionResult CadastroCliente([FromForm] Cliente cliente)
         {
             if (ModelState.IsValid)
-            {
-                //TODO - Cadastro cliente
+            {               
                 _repositoryCliente.Cadastrar(cliente);                
 
                 TempData["MSG_SUCESSO"] = $"Cadastro do cliente {cliente.Nome} realizado com sucesso!";

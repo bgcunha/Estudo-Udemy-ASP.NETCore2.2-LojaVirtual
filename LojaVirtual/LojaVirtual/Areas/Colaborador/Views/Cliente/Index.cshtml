@@ -1,0 +1,72 @@
+﻿@model X.PagedList.PagedList<LojaVirtual.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+    var pesquisa = Context.Request.Query["pesquisa"];
+}
+
+<h1>Cliente</h1>
+
+<br />
+<br />
+
+<form method="get">
+    <div class="mb-3">
+        <label for="pesquisa" class="form-label"></label>
+        <input type="text" name="pesquisa" id="pesquisa" value="@pesquisa" class="form-control" placeholder="Digite o nome ou email">
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+    
+</form>
+
+<br />
+<br />
+
+@if (TempData["MSG_SUCESSO"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+}
+
+
+@if (Model.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().Nome)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.First().Email)</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Nome</td>
+                        <td>@item.Email</td>
+                        <td>
+                            @if (item.Situacao == "A")
+                            {
+                                <a asp-action="AtivarDesativar" asp-route-id="@item.Id" class="btn btn-danger">Desativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="AtivarDesativar" asp-route-id="@item.Id" class="btn btn-success">Ativar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <span> Nenum registro encontrado</span>
+}
+
+@Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa }))
