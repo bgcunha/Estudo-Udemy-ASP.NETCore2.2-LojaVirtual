@@ -4,7 +4,7 @@ using X.PagedList;
 
 namespace LojaVirtual.Repositories.Contracts
 {
-    interface IRepositoryProduto
+    public interface IRepositoryProduto
     {
         void Cadastrar(Produto model);
         void Atualizar(Produto model);        
