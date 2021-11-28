@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,23 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     public class ProdutoController : Controller
     {
         private IRepositoryProduto _repositoryProduto;
-        public ProdutoController(IRepositoryProduto repositoryProduto)
+        private IRepositoryCategoria _repositoryCategoria;
+        public ProdutoController(IRepositoryProduto repositoryProduto, IRepositoryCategoria repositoryCategoria)
         {
             _repositoryProduto = repositoryProduto;
+            _repositoryCategoria = repositoryCategoria;
         }
 
         public IActionResult Index(int? pagina, string pesquisa)
         {
             var produtos = _repositoryProduto.ObterTodos(pagina, pesquisa);
             return View(produtos);
+        }
+
+        public  IActionResult Cadastrar()
+        {
+            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a=> new SelectListItem(a.Nome, a.Id.ToString()));
+            return View();
         }
     }
 }

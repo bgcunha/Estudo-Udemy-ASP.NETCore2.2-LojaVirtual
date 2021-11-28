@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Models
@@ -7,6 +8,8 @@ namespace LojaVirtual.Models
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
         public decimal Valor { get; set; }
         public int Quantidade { get; set; }
@@ -14,10 +17,11 @@ namespace LojaVirtual.Models
         //Frete
         public double Peso { get; set; }
         public int largura { get; set; }
-        public int altura { get; set; }
-        public int profundidade { get; set; }
+        public int Altura { get; set; }
+        public int Profundidade { get; set; }
 
         //Banco de dados - Relacionamento entre tabelas
+        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
 
         //POO - Associações entre objetos
