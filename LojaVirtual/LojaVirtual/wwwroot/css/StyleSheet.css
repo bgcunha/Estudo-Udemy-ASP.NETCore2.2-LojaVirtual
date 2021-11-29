@@ -5,10 +5,18 @@
     color:red;
     display: block;
 }
-.Imagens .btn-imagem-excluir{
-    width:100%;
+.Imagens .btn-imagem-excluir {
+    width: 100%;
+    margin-bottom: 30px;
+    /*margin-top: 5px;*/
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .Imagens div{
     text-align: center;
+}
+
+.Imagens .img-thumbnail{
+    width:100%;
 }
