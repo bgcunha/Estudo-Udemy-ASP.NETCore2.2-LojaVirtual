@@ -35,7 +35,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">UN</div>
                 </div>
-                <input asp-for="Quantidade" class="form-control" placeholder="Digite a quantidade do produto" />
+                <input asp-for="Quantidade" type="number" class="form-control" placeholder="Digite a quantidade do produto" />
             </div>
             <span asp-validation-for="Quantidade" class="text-danger"></span>
         </div>
@@ -65,17 +65,17 @@
             <span asp-validation-for="Peso" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="largura" class="form-label"></label>
+            <label asp-for="Largura" type="number" class="form-label"></label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">cm</div>
                 </div>
-                <input asp-for="largura" class="form-control" />
+                <input asp-for="Largura" class="form-control" />
             </div>
-            <span asp-validation-for="largura" class="text-danger"></span>
+            <span asp-validation-for="Largura" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Altura" class="form-label"></label>
+            <label asp-for="Altura" type="number" class="form-label"></label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">cm</div>
@@ -85,14 +85,14 @@
             <span asp-validation-for="Altura" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Profundidade" class="form-label"></label>
+            <label asp-for="Comprimento" type="number" class="form-label"></label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">cm</div>
                 </div>
-                <input asp-for="Profundidade" class="form-control" />
+                <input asp-for="Comprimento" class="form-control" />
             </div>
-            <span asp-validation-for="Profundidade" class="text-danger"></span>
+            <span asp-validation-for="Comprimento" class="text-danger"></span>
         </div>
     </div>
 

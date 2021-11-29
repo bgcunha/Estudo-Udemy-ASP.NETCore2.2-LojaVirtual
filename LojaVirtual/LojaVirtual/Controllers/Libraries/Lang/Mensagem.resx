@@ -132,6 +132,9 @@
   <data name="MSG_E005" xml:space="preserve">
     <value>O campo {0} está diferente do campo {1}!</value>
   </data>
+  <data name="MSG_E006" xml:space="preserve">
+    <value>O valor do campo {0} deve estar entre {1} e {2}</value>
+  </data>
   <data name="MSG_SALTERADO" xml:space="preserve">
     <value>Alterado com sucesso</value>
   </data>
