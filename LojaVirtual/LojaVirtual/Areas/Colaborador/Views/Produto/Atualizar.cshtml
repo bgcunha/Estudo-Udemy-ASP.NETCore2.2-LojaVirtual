@@ -1,9 +1,9 @@
 ﻿@model LojaVirtual.Models.Produto
 @{
-    ViewData["Title"] = "Cadastrar";
+    ViewData["Title"] = "Atualizar";
 }
 
-<h1>Cadastrar</h1>
+<h1>Atualizar</h1>
 
 <form method="post">
     <div class="row">
@@ -21,7 +21,7 @@
             <span asp-validation-for="Nome" class="text-danger"></span>
         </div>
     </div>
-    
+
     <div class="mb-3">
         <label asp-for="Descricao" class="form-label"></label>
         <textarea asp-for="Descricao" class="form-control"></textarea>
@@ -50,7 +50,7 @@
             <span asp-validation-for="Valor" class="text-danger"></span>
         </div>
     </div>
-    
+
 
     <h2>Frete</h2>
     <div class="row">

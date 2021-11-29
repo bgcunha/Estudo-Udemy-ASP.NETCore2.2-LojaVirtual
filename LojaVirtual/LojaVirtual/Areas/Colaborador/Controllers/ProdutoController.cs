@@ -49,5 +49,29 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
         }
+       
+        public IActionResult Atualizar(int id)
+        {
+            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
+            var produto = _repositoryProduto.ObterPorId(id);
+            return View(produto);
+        }
+
+        [HttpPost]
+        public IActionResult Atualizar(Produto model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repositoryProduto.Atualizar(model);
+
+                TempData["MSG_SUCESSO"] = Mensagem.MSG_SALTERADO;
+
+                return RedirectToAction(nameof(Index));
+
+            }
+
+            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
+            return View();
+        }
     }
 }
