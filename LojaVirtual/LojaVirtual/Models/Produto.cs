@@ -11,6 +11,7 @@ namespace LojaVirtual.Models
 
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        [Display(Name = "Preço")] 
         public decimal Valor { get; set; }
         public int Quantidade { get; set; }
 
