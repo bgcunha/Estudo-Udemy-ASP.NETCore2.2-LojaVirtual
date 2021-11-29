@@ -42,7 +42,7 @@ namespace LojaVirtual.Models
         [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
 
-        //POO - Associações entre objetos
+        //POO - Associações entre objetos        
         [ForeignKey("CategoriaId")]
         public virtual Categoria Categoria { get; set; }
 

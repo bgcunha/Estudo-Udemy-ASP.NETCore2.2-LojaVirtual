@@ -1,4 +1,6 @@
-﻿using LojaVirtual.Repositories.Contracts;
+﻿using LojaVirtual.Controllers.Libraries.Lang;
+using LojaVirtual.Models;
+using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -28,6 +30,23 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         public  IActionResult Cadastrar()
         {
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a=> new SelectListItem(a.Nome, a.Id.ToString()));
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cadastrar(Produto model )
+        {
+            if (ModelState.IsValid)
+            {
+                _repositoryProduto.Cadastrar(model);
+
+                TempData["MSG_SUCESSO"] = Mensagem.MSG_SSALVO;
+
+                return RedirectToAction(nameof(Index));
+
+            }
+            
+            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
         }
     }
