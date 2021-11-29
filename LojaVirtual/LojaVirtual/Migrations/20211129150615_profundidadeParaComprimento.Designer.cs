@@ -4,14 +4,16 @@ using LojaVirtual.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    partial class LojaVirtualContextModelSnapshot : ModelSnapshot
+    [Migration("20211129150615_profundidadeParaComprimento")]
+    partial class profundidadeParaComprimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,8 +143,6 @@ namespace LojaVirtual.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired();
 
-                    b.Property<int>("Largura");
-
                     b.Property<string>("Nome")
                         .IsRequired();
 
@@ -151,6 +151,8 @@ namespace LojaVirtual.Migrations
                     b.Property<int>("Quantidade");
 
                     b.Property<decimal>("Valor");
+
+                    b.Property<int>("largura");
 
                     b.HasKey("Id");
 
