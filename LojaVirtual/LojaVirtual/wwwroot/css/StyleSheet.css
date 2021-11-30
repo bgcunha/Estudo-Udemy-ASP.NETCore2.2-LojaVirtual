@@ -5,12 +5,21 @@
     color:red;
     display: block;
 }
-.Imagens .btn-imagem-excluir {
-    width: 100%;
+
+.Imagens .bottom30 {
     margin-bottom: 30px;
+}
+
+.Imagens .btn-imagem-excluir {
+    width: 100% !important;
+    /*margin-bottom: 30px;*/
     /*margin-top: 5px;*/
     border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    border-top-right-radius: 0px;    
+}
+
+.Imagens .btn-ocultar {    
+    display: none;
 }
 
 .Imagens div{
@@ -21,10 +30,14 @@
     width:100%;
 }
 
-.input-file{
+.Imagens .input-file {
     display: none;
 }
 
-.img-upload{
-    cursor:pointer;
+.Imagens .img-upload {
+    cursor: pointer !important;
+}
+
+.Imagens input[name=imagem] {
+    display: none;
 }

@@ -20,6 +20,9 @@ function AjaxUploadImagemProduto() {
     $(".btn-imagem-excluir").click(function () {
         var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
+        var InputFile = $(this).parent().find(".input-file");
+
 
         $.ajax({
             type: "GET",
@@ -29,6 +32,9 @@ function AjaxUploadImagemProduto() {
             },
             success: function (data) {
                 Imagem.attr("src", "/img/produto-padrao.png");
+                BtnExcluir.addClass(".btn-ocultar");
+                CampoHidden.val('');
+                InputFile.val('');
             }
         });
     });
@@ -40,6 +46,7 @@ function AjaxUploadImagemProduto() {
 
         var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
 
         $.ajax({
             type: "POST",
@@ -53,7 +60,8 @@ function AjaxUploadImagemProduto() {
             success: function (data) {
                 var Caminho = data.caminho;
                 Imagem.attr("src", Caminho);
-                CampoHidden.val(Caminho);                
+                CampoHidden.val(Caminho);
+                BtnExcluir.removeClass(".btn-ocultar");
             }
         });
     });
