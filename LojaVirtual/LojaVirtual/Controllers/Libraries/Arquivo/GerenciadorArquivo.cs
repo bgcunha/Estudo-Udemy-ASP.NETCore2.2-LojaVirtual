@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LojaVirtual.Models;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.IO;
 
 namespace LojaVirtual.Controllers.Libraries.Arquivo
@@ -15,7 +17,7 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
                 file.CopyTo(stream);
             }
 
-            return Path.Combine("/uploads/temp", nomeArquivo);
+            return Path.Combine("/uploads/temp", nomeArquivo).Replace(@"\", "/");
         }
 
         public static bool ExcluirImagemProduto(string caminho)
@@ -28,6 +30,37 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
             }
             
             return false;
+        }
+
+        public static List<Imagem> MoverImagensProduto(List<string> caminhosTemp, int idProduto)
+        {
+            var CaminhoDefinitivoImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString());
+
+            if (!Directory.Exists(CaminhoDefinitivoImagens))
+                Directory.CreateDirectory(CaminhoDefinitivoImagens);
+
+            var ImagensDefinitivo = new List<Imagem>();
+            foreach (var CaminhoTemp in caminhosTemp)
+            {
+                var NomeArquivo = Path.GetFileName(CaminhoTemp);                
+                var CaminoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
+                var CaminhoAbsolutoDefinitivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString(), NomeArquivo);
+
+                if (File.Exists(CaminoAbsolutoTemp))
+                {
+                    File.Copy(CaminoAbsolutoTemp, CaminhoAbsolutoDefinitivo);
+
+                    if (File.Exists(CaminhoAbsolutoDefinitivo))
+                    {
+                        File.Delete(CaminoAbsolutoTemp);
+
+                        var caminhoRetorno = new Imagem{ Caminho = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/"), Id = idProduto};
+                        ImagensDefinitivo.Add(caminhoRetorno);
+                    }
+                }
+            }
+
+            return ImagensDefinitivo;
         }
 
     }

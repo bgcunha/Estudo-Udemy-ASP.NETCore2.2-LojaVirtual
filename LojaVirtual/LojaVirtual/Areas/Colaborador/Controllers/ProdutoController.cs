@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Controllers.Libraries.Lang;
+﻿using LojaVirtual.Controllers.Libraries.Arquivo;
+using LojaVirtual.Controllers.Libraries.Lang;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     {
         private IRepositoryProduto _repositoryProduto;
         private IRepositoryCategoria _repositoryCategoria;
-        public ProdutoController(IRepositoryProduto repositoryProduto, IRepositoryCategoria repositoryCategoria)
+        private IRepositoryImagem _repositoryImagem;
+        public ProdutoController(IRepositoryProduto repositoryProduto, IRepositoryCategoria repositoryCategoria, IRepositoryImagem repositoryImagem)
         {
             _repositoryProduto = repositoryProduto;
             _repositoryCategoria = repositoryCategoria;
+            _repositoryImagem = repositoryImagem;
         }
 
         public IActionResult Index(int? pagina, string pesquisa)
@@ -27,29 +30,34 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View(produtos);
         }
 
-        public  IActionResult Cadastrar()
+        public IActionResult Cadastrar()
         {
-            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a=> new SelectListItem(a.Nome, a.Id.ToString()));
+            ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(Produto model )
+        public IActionResult Cadastrar(Produto model)
         {
             if (ModelState.IsValid)
             {
                 _repositoryProduto.Cadastrar(model);
+
+                var CaminhosTemp = new List<string> { Request.Form["Imagem"] };
+                var imagensDefinitivas = GerenciadorArquivo.MoverImagensProduto(CaminhosTemp.Where(x => x.Length > 0).ToList(), model.Id);
+
+                _repositoryImagem.CadastrarImagens(imagensDefinitivas);
 
                 TempData["MSG_SUCESSO"] = Mensagem.MSG_SSALVO;
 
                 return RedirectToAction(nameof(Index));
 
             }
-            
+
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
         }
-       
+
         public IActionResult Atualizar(int id)
         {
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));

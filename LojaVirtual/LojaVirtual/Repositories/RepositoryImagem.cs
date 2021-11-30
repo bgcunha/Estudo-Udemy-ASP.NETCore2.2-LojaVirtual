@@ -1,6 +1,7 @@
 ﻿using LojaVirtual.Database;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LojaVirtual.Repositories
@@ -14,6 +15,16 @@ namespace LojaVirtual.Repositories
             this._context = context;           
         }
 
+        public void CadastrarImagens(List<Imagem> images)
+        {
+            if (images != null && images.Count > 0)
+            {
+                foreach (var imagem in images)
+                {
+                    Cadastrar(imagem);
+                }
+            }
+        }
         public void Cadastrar(Imagem model)
         {
             _context.Add(model);
