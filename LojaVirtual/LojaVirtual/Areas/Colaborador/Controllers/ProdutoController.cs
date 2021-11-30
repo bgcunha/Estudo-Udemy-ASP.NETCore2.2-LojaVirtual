@@ -39,11 +39,11 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Produto model)
         {
+            var CaminhosTemp = new List<string> { Request.Form["Imagem"] };
             if (ModelState.IsValid)
             {
                 _repositoryProduto.Cadastrar(model);
-
-                var CaminhosTemp = new List<string> { Request.Form["Imagem"] };
+                
                 var imagensDefinitivas = GerenciadorArquivo.MoverImagensProduto(CaminhosTemp.Where(x => x.Length > 0).ToList(), model.Id);
 
                 _repositoryImagem.CadastrarImagens(imagensDefinitivas);
@@ -51,11 +51,11 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 TempData["MSG_SUCESSO"] = Mensagem.MSG_SSALVO;
 
                 return RedirectToAction(nameof(Index));
-
             }
 
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
-            return View();
+            model.Imagens = CaminhosTemp.Select(x => new Imagem { Caminho = x }).ToList();
+            return View(model);
         }
 
         public IActionResult Atualizar(int id)
@@ -68,18 +68,25 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpPost]
         public IActionResult Atualizar(Produto model)
         {
+            var CaminhosTemp = new List<string> { Request.Form["Imagem"] };
             if (ModelState.IsValid)
             {
                 _repositoryProduto.Atualizar(model);
 
-                TempData["MSG_SUCESSO"] = Mensagem.MSG_SALTERADO;
+                var imagensDefinitivas = GerenciadorArquivo.MoverImagensProduto(CaminhosTemp.Where(x => x.Length > 0).ToList(), model.Id);
+
+                _repositoryImagem.ExcluirImagemsDoProduto(model.Id);
+
+                _repositoryImagem.CadastrarImagens(imagensDefinitivas);
+
+                TempData["MSG_SUCESSO"] = Mensagem.MSG_SSALVO;
 
                 return RedirectToAction(nameof(Index));
-
             }
 
             ViewBag.CATEGORIAS = _repositoryCategoria.ObterTodos().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
-            return View();
+            model.Imagens = CaminhosTemp.Select(x => new Imagem { Caminho = x }).ToList();
+            return View(model);
         }
     }
 }
