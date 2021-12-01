@@ -80,5 +80,21 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
             return ImagensDefinitivo;
         }
 
+        public static void ExcluirImagemsProduto(List<Imagem> imagems)
+        {
+            foreach (var imagem in imagems)
+            {
+                ExcluirImagemProduto(imagem.Caminho);
+            }
+
+            var idProduto = imagems[0].ProdutoId;
+
+            var PastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString());
+
+            if (Directory.Exists(PastaProduto))
+            {
+                Directory.Delete(PastaProduto, true);
+            }
+        }
     }
 }

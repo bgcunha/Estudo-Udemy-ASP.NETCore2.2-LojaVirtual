@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Controllers.Libraries.Arquivo;
+using LojaVirtual.Controllers.Libraries.Filtros;
 using LojaVirtual.Controllers.Libraries.Lang;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
+    [ColaboradorAutorizacao]
     public class ProdutoController : Controller
     {
         private IRepositoryProduto _repositoryProduto;
@@ -88,5 +90,20 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             model.Imagens = CaminhosTemp.Select(x => new Imagem { Caminho = x }).ToList();
             return View(model);
         }
+
+       [ValidateHttpReferer]
+        public IActionResult Excluir(int id)
+        {
+            var Modelo = _repositoryProduto.ObterPorId(id);
+
+            GerenciadorArquivo.ExcluirImagemsProduto(Modelo.Imagens.ToList());
+            _repositoryImagem.ExcluirImagemsDoProduto(id);
+            _repositoryProduto.Excluir(id);
+
+            TempData["MSG_S"] = Mensagem.MSG_SEXCLUIDO;
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
