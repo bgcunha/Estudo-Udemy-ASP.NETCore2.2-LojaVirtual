@@ -14,7 +14,7 @@
 
 function AjaxUploadImagemProduto() {
     $(".img-upload").click(function () {
-        $(this).parent().find(".input-file").click();
+        $(this).parent().parent().find(".input-file").click();
     });
 
     $(".btn-imagem-excluir").click(function () {
@@ -29,6 +29,7 @@ function AjaxUploadImagemProduto() {
             url: "/Colaborador/Imagem/Deletar?caminho=" + CampoHidden.val(),
             error: function () {
                 alert("Erro no envio do arquivo");
+                Imagem.attr("src", "/img/produto-padrao.png");
             },
             success: function (data) {
                 Imagem.attr("src", "/img/produto-padrao.png");
@@ -48,6 +49,10 @@ function AjaxUploadImagemProduto() {
         var Imagem = $(this).parent().find(".img-upload");
         var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
 
+        //Apresenta iamgem loading
+        Imagem.attr("src", "/img/loading.gif");
+        Imagem.addClass("thumb");
+
         $.ajax({
             type: "POST",
             url: "/Colaborador/Imagem/Armazenar",
@@ -56,10 +61,13 @@ function AjaxUploadImagemProduto() {
             processData: false,
             error: function () {
                 alert("Erro no envio do arquivo");
+                Imagem.attr("src", "/img/produto-padrao.png");
+                Imagem.removeClass("thumb");
             },
             success: function (data) {
                 var Caminho = data.caminho;
                 Imagem.attr("src", Caminho);
+                Imagem.removeClass("thumb");
                 CampoHidden.val(Caminho);
                 BtnExcluir.removeClass(".btn-ocultar");
             }
