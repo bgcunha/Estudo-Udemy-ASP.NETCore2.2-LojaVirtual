@@ -77,7 +77,9 @@ namespace LojaVirtual
             services.AddScoped<NewsLatterEmail>();
             services.AddScoped<Categoria>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(
+                options=> options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x=> "O campo deve ser preenchido")
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=LojaVirtual;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
