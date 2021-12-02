@@ -28,7 +28,7 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
                 File.Delete(caminhoDeletar);
                 return true;
             }
-            
+
             return false;
         }
 
@@ -42,39 +42,42 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
             var ImagensDefinitivo = new List<Imagem>();
             foreach (var CaminhoTemp in caminhosTemp)
             {
-                var NomeArquivo = Path.GetFileName(CaminhoTemp);
-
-                var CaminhoDefinitivo = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/");
-
-                var caminhoRetorno = new Imagem { Caminho = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/"), Id = idProduto };
-                if (CaminhoDefinitivo != CaminhoTemp)
+                if (!string.IsNullOrEmpty(CaminhoTemp))
                 {
-                    var CaminoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
-                    var CaminhoAbsolutoDefinitivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString(), NomeArquivo);
+                    var NomeArquivo = Path.GetFileName(CaminhoTemp);
 
-                    if (File.Exists(CaminoAbsolutoTemp))
+                    var CaminhoDefinitivo = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/");
+
+                    var caminhoRetorno = new Imagem { Caminho = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/"), Id = idProduto };
+                    if (CaminhoDefinitivo != CaminhoTemp)
                     {
-                        //Deleta arquivo na pasta destino
-                        if (File.Exists(CaminhoAbsolutoDefinitivo))
-                        {
-                            File.Delete(CaminhoAbsolutoDefinitivo);
-                        }
+                        var CaminoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
+                        var CaminhoAbsolutoDefinitivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString(), NomeArquivo);
 
-                        //Copira arquivo da pasta temp para a definitiva
-                        File.Copy(CaminoAbsolutoTemp, CaminhoAbsolutoDefinitivo);
-
-                        //Deleta arquivo da pasta temp
-                        if (File.Exists(CaminhoAbsolutoDefinitivo))
+                        if (File.Exists(CaminoAbsolutoTemp))
                         {
-                            File.Delete(CaminoAbsolutoTemp);
+                            //Deleta arquivo na pasta destino
+                            if (File.Exists(CaminhoAbsolutoDefinitivo))
+                            {
+                                File.Delete(CaminhoAbsolutoDefinitivo);
+                            }
+
+                            //Copira arquivo da pasta temp para a definitiva
+                            File.Copy(CaminoAbsolutoTemp, CaminhoAbsolutoDefinitivo);
+
+                            //Deleta arquivo da pasta temp
+                            if (File.Exists(CaminhoAbsolutoDefinitivo))
+                            {
+                                File.Delete(CaminoAbsolutoTemp);
+                            }
                         }
+                        //else
+                        //{
+                        //    return null;
+                        //}
                     }
-                    //else
-                    //{
-                    //    return null;
-                    //}
+                    ImagensDefinitivo.Add(caminhoRetorno);
                 }
-                ImagensDefinitivo.Add(caminhoRetorno);
             }
 
             return ImagensDefinitivo;
