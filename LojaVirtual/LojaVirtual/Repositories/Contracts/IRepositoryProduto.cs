@@ -6,11 +6,13 @@ namespace LojaVirtual.Repositories.Contracts
 {
     public interface IRepositoryProduto
     {
-        void Cadastrar(Produto model);
-        void Atualizar(Produto model);        
-        void Excluir(int id);
+        //CRUD
+        void Cadastrar(Produto produto);
+        void Atualizar(Produto produto);
+        void Excluir(int Id);
 
-        Produto ObterPorId(int id);
+        Produto ObterPorId(int Id);
         IPagedList<Produto> ObterTodos(int? pagina, string pesquisa);
+        IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao);
     }
 }

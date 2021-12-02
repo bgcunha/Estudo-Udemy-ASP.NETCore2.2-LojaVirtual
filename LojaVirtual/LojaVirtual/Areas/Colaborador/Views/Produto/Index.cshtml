@@ -1,5 +1,4 @@
-﻿@model X.PagedList.PagedList<LojaVirtual.Models.Produto>
-
+﻿@model X.PagedList.IPagedList<LojaVirtual.Models.Produto>
 @{
     ViewData["Title"] = "Index";
     var pesquisa = Context.Request.Query["pesquisa"];
@@ -9,62 +8,63 @@
 
 <br />
 <br />
-
+<!--
+    Formulário
+    -- QueryString: Colaborador/Cliente/Index?pesquisa={palavraDigitada}&pagina=3
+-->
 <form method="get">
-    <div class="mb-3">
-        <label for="pesquisa" class="form-label"></label>
-        <input type="text" name="pesquisa" id="pesquisa" value="@pesquisa" class="form-control" placeholder="Digite o nome">
-
+    <div class="form-group">
+        <label for="pesquisa"></label>
+        <input type="text" name="pesquisa" id="pesquisa" value="@pesquisa" class="form-control" placeholder="Digite o nome do produto">
     </div>
-    <button type="submit" class="btn btn-primary">Pesquisar</button>
-
+    <button type="submit" class="btn btn-primary">OK</button>
 </form>
-
 <br />
 <br />
 
-@if (TempData["MSG_SUCESSO"] != null)
+@if (TempData["MSG_S"] != null)
 {
-    <p class="alert alert-success">@TempData["MSG_SUCESSO"]</p>
+    <p class="alert alert-success">@TempData["MSG_S"]</p>
 }
 
-<a asp-action="Cadastrar" class="btn btn-primary">Cadastrar </a>
+<a asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
 
 @if (Model.Count > 0)
 {
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">@Html.DisplayNameFor(m => m.First().Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.First().Nome)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.First().Categoria)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.First().Valor)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Nome)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Categoria)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Valor)</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (Produto produto in Model)
                 {
-                <tr>
-                    <th scope="row">@item.Id</th>
-                    <td>@item.Nome</td>
-                    <td>@item.CategoriaId</td>
-                    <td>@item.Valor</td>
-                    <td>
-                        <a asp-action="Atualizar" asp-route-id="@item.Id" class="btn btn-secondary">Atualizar</a>
-                        <a asp-action="Excluir" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
-                    </td>
-                    
-                </tr>
+                    <tr>
+                        <th scope="row">@produto.Id</th>
+                        <td>@produto.Nome</td>
+                        <td>@produto.CategoriaId</td>
+                        <td>@produto.Valor</td>
+                        <td>
+                            <a asp-action="Atualizar" asp-route-id="@produto.Id" class="btn btn-secondary">Atualizar</a>
+                            <a asp-action="Excluir" asp-route-id="@produto.Id" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
+
+    @Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa }))
+
 }
 else
 {
-    <span> Nenum registro encontrado</span>
+    <span>Nenhum registro cadastrado!</span>
 }
-
-@Html.PagedListPager((IPagedList)Model, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa }))

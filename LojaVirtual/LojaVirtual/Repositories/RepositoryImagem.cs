@@ -15,39 +15,38 @@ namespace LojaVirtual.Repositories
             this._context = context;           
         }
 
-        public void CadastrarImagens(List<Imagem> images)
+        public void CadastrarImagens(List<Imagem> ListaImagens, int ProdutoId)
         {
-            if (images != null && images.Count > 0)
+            if (ListaImagens != null && ListaImagens.Count > 0)
             {
-                foreach (var imagem in images)
+                foreach (var Imagem in ListaImagens)
                 {
-                    Cadastrar(imagem);
+                    Cadastrar(Imagem);
                 }
             }
         }
-        public void Cadastrar(Imagem model)
+        public void Cadastrar(Imagem imagem)
         {
-            _context.Add(model);
+            _context.Add(imagem);
             _context.SaveChanges();
         }
 
-        public void Excluir(int id)
+        public void Excluir(int Id)
         {
-            var model = _context.Imagens.Find(id);
-            _context.Remove(model);
+            Imagem imagem = _context.Imagens.Find(Id);
+            _context.Remove(imagem);
             _context.SaveChanges();
         }
 
-        public void ExcluirImagensDoProduto(int idProduto)
+        public void ExcluirImagensDoProduto(int ProdutoId)
         {
-            var models = _context.Imagens.Where(x=>x.ProdutoId == idProduto).ToArray();
+            List<Imagem> imagens = _context.Imagens.Where(a => a.ProdutoId == ProdutoId).ToList();
 
-            foreach (var model in models)
+            foreach (Imagem imagem in imagens)
             {
-                _context.Remove(model);
+                _context.Remove(imagem);
             }
-           
             _context.SaveChanges();
-        }        
+        }
     }
 }

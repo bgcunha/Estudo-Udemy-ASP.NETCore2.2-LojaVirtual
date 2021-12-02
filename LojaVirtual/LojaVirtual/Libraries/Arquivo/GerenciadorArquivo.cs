@@ -1,7 +1,10 @@
 ﻿using LojaVirtual.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LojaVirtual.Libraries.Arquivo
 {
@@ -9,94 +12,106 @@ namespace LojaVirtual.Libraries.Arquivo
     {
         public static string CadastrarImagemProduto(IFormFile file)
         {
-            var nomeArquivo = Path.GetFileName(file.FileName);
-            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", nomeArquivo);
+            var NomeArquivo = Path.GetFileName(file.FileName);
+            var Caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
 
-            using (var stream = new FileStream(caminho, FileMode.Create))
+            using (var stream = new FileStream(Caminho, FileMode.Create))
             {
                 file.CopyTo(stream);
             }
 
-            return Path.Combine("/uploads/temp", nomeArquivo).Replace(@"\", "/");
+            return Path.Combine("/uploads/temp", NomeArquivo).Replace("\\", "/");
         }
 
         public static bool ExcluirImagemProduto(string caminho)
         {
-            var caminhoDeletar = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", caminho.TrimStart('/'));
-            if (File.Exists(caminhoDeletar))
+            string Caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", caminho.TrimStart('/'));
+            if (File.Exists(Caminho))
             {
-                File.Delete(caminhoDeletar);
+                File.Delete(Caminho);
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
-        public static List<Imagem> MoverImagensProduto(List<string> caminhosTemp, int idProduto)
+        public static List<Imagem> MoverImagensProduto(List<string> ListaCaminhoTemp, int ProdutoId)
         {
-            var CaminhoDefinitivoImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString());
+            /*
+             * Criar a Pasta do Produto
+             */
+            var CaminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString());
+            if (!Directory.Exists(CaminhoDefinitivoPastaProduto))
+            {
+                Directory.CreateDirectory(CaminhoDefinitivoPastaProduto);
+            }
 
-            if (!Directory.Exists(CaminhoDefinitivoImagens))
-                Directory.CreateDirectory(CaminhoDefinitivoImagens);
-
-            var ImagensDefinitivo = new List<Imagem>();
-            foreach (var CaminhoTemp in caminhosTemp)
+            /*
+             * Mover a Imagem da Pasta Temp para a pasta definitiva
+             */
+            List<Imagem> ListaImagensDef = new List<Imagem>();
+            foreach (var CaminhoTemp in ListaCaminhoTemp)
             {
                 if (!string.IsNullOrEmpty(CaminhoTemp))
                 {
                     var NomeArquivo = Path.GetFileName(CaminhoTemp);
 
-                    var CaminhoDefinitivo = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/");
+                    var CaminhoDef = Path.Combine("/uploads", ProdutoId.ToString(), NomeArquivo).Replace("\\", "/");
 
-                    var caminhoRetorno = new Imagem { Caminho = Path.Combine("/uploads", idProduto.ToString(), NomeArquivo).Replace(@"\", "/"), Id = idProduto };
-                    if (CaminhoDefinitivo != CaminhoTemp)
+                    if (CaminhoDef != CaminhoTemp)
                     {
-                        var CaminoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
-                        var CaminhoAbsolutoDefinitivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString(), NomeArquivo);
+                        var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
+                        var CaminhoAbsolutoDef = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString(), NomeArquivo);
 
-                        if (File.Exists(CaminoAbsolutoTemp))
+                        if (File.Exists(CaminhoAbsolutoTemp))
                         {
-                            //Deleta arquivo na pasta destino
-                            if (File.Exists(CaminhoAbsolutoDefinitivo))
+                            //Deleta arquivo no caminho de Destino.
+                            if (File.Exists(CaminhoAbsolutoDef))
                             {
-                                File.Delete(CaminhoAbsolutoDefinitivo);
+                                File.Delete(CaminhoAbsolutoDef);
+                            }
+                            //Copia Arquivo da pasta Temporaria para Destino.
+                            File.Copy(CaminhoAbsolutoTemp, CaminhoAbsolutoDef);
+
+                            //Deleta arquivo da pasta Temporária.
+                            if (File.Exists(CaminhoAbsolutoDef))
+                            {
+                                File.Delete(CaminhoAbsolutoTemp);
                             }
 
-                            //Copira arquivo da pasta temp para a definitiva
-                            File.Copy(CaminoAbsolutoTemp, CaminhoAbsolutoDefinitivo);
-
-                            //Deleta arquivo da pasta temp
-                            if (File.Exists(CaminhoAbsolutoDefinitivo))
-                            {
-                                File.Delete(CaminoAbsolutoTemp);
-                            }
+                            ListaImagensDef.Add(new Imagem() { Caminho = Path.Combine("/uploads", ProdutoId.ToString(), NomeArquivo).Replace("\\", "/"), ProdutoId = ProdutoId });
                         }
-                        //else
-                        //{
-                        //    return null;
-                        //}
+                        else
+                        {
+                            return null;
+                        }
                     }
-                    ImagensDefinitivo.Add(caminhoRetorno);
+                    else
+                    {
+                        ListaImagensDef.Add(new Imagem() { Caminho = Path.Combine("/uploads", ProdutoId.ToString(), NomeArquivo).Replace("\\", "/"), ProdutoId = ProdutoId });
+                    }
                 }
             }
 
-            return ImagensDefinitivo;
+            return ListaImagensDef;
         }
 
-        public static void ExcluirImagensProduto(List<Imagem> imagems)
+        public static void ExcluirImagensProduto(List<Imagem> ListaImagem)
         {
-            foreach (var imagem in imagems)
+            int ProdutoId = 0;
+            foreach (var Imagem in ListaImagem)
             {
-                ExcluirImagemProduto(imagem.Caminho);
+                ExcluirImagemProduto(Imagem.Caminho);
+                ProdutoId = Imagem.ProdutoId;
             }
 
-            var idProduto = imagems[0].ProdutoId;
-
-            var PastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", idProduto.ToString());
+            var PastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString());
 
             if (Directory.Exists(PastaProduto))
             {
-                Directory.Delete(PastaProduto, true);
+                Directory.Delete(PastaProduto);
             }
         }
     }

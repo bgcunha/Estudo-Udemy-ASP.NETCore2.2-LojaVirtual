@@ -19,43 +19,60 @@ namespace LojaVirtual.Repositories
             this._context = context;
             this._config = configuration;
         }
-        public void Atualizar(Produto model)
+        public void Atualizar(Produto produto)
         {
-            _context.Update(model);
+            _context.Update(produto);
             _context.SaveChanges();
         }
 
-        public void Cadastrar(Produto model)
+        public void Cadastrar(Produto produto)
         {
-            _context.Add(model);
+            _context.Add(produto);
             _context.SaveChanges();
         }
 
-        public void Excluir(int id)
+        public void Excluir(int Id)
         {
-            var produto = ObterPorId(id);
+            Produto produto = ObterPorId(Id);
             _context.Remove(produto);
             _context.SaveChanges();
         }
 
-        public Produto ObterPorId(int id)
+        public Produto ObterPorId(int Id)
         {
-            return _context.Produtos.Include(x => x.Imagens).Where(x => x.Id == id).FirstOrDefault();
+            return _context.Produtos.Include(a => a.Imagens).OrderBy(a => a.Nome).Where(a => a.Id == Id).FirstOrDefault();
         }
 
         public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa)
         {
-            var numeroPagina = pagina ?? 1;
+            return ObterTodos(pagina, pesquisa, "A");
+        }
 
+        public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao)
+        {
+            int RegistroPorPagina = _config.GetValue<int>("RegistrosPorPagina");
 
-            if (string.IsNullOrEmpty(pesquisa))
+            int NumeroPagina = pagina ?? 1;
+
+            var bancoProduto = _context.Produtos.AsQueryable();
+            if (!string.IsNullOrEmpty(pesquisa))
             {
-                return _context.Produtos.Include(x => x.Imagens).ToPagedList<Produto>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
+                bancoProduto = bancoProduto.Where(a => a.Nome.Contains(pesquisa.Trim()));
+            }
+            if (ordenacao == "A")
+            {
+                bancoProduto = bancoProduto.OrderBy(a => a.Nome);
+            }
+            if (ordenacao == "ME")
+            {
+                bancoProduto = bancoProduto.OrderBy(a => a.Valor);
+            }
+            if (ordenacao == "MA")
+            {
+                bancoProduto = bancoProduto.OrderByDescending(a => a.Valor);
             }
 
-            pesquisa = pesquisa.Trim();
-            return _context.Produtos.Include(x => x.Imagens).Where(x => x.Nome.Contains(pesquisa)).ToPagedList<Produto>(numeroPagina, _config.GetValue<int>("RegistrosPorPagina"));
-
+            return bancoProduto.Include(a => a.Imagens).ToPagedList<Produto>(NumeroPagina, RegistroPorPagina);
         }
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
-    [ColaboradorAutorizacao]
+    //[ColaboradorAutorizacao]
     public class ProdutoController : Controller
     {
         private IRepositoryProduto _produtoRepository;
@@ -44,7 +44,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             {
                 _produtoRepository.Cadastrar(produto);
                 List<Imagem> ListaImagensDef = GerenciadorArquivo.MoverImagensProduto(new List<string>(Request.Form["imagem"]), produto.Id);
-                _imagemRepository.CadastrarImagens(ListaImagensDef/*, produto.Id*/);
+                _imagemRepository.CadastrarImagens(ListaImagensDef, produto.Id);
 
                 TempData["MSG_S"] = Mensagem.MSG_SSALVO;
 
@@ -78,7 +78,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 List<Imagem> ListaImagensDef = GerenciadorArquivo.MoverImagensProduto(new List<string>(Request.Form["imagem"]), produto.Id);
 
                 _imagemRepository.ExcluirImagensDoProduto(produto.Id);
-                _imagemRepository.CadastrarImagens(ListaImagensDef/*, produto.Id*/);
+                _imagemRepository.CadastrarImagens(ListaImagensDef, produto.Id);
 
                 TempData["MSG_S"] = Mensagem.MSG_SSALVO;
 
