@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Mail;
 
-namespace LojaVirtual.Controllers.Libraries
+namespace LojaVirtual.Libraries
 {
     public class GerenciarEmail
     {

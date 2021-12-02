@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LojaVirtual.Controllers.Libraries.Lang {
+namespace LojaVirtual.Libraries.Lang {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LojaVirtual.Controllers.Libraries.Lang {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LojaVirtual.Controllers.Libraries.Lang.Mensagem", typeof(Mensagem).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LojaVirtual.Libraries.Lang.Mensagem", typeof(Mensagem).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -1,6 +1,6 @@
 ﻿
-using LojaVirtual.Controllers.Libraries.Lang;
-using LojaVirtual.Controllers.Libraries.Validacao;
+using LojaVirtual.Libraries.Lang;
+using LojaVirtual.Libraries.Validacao;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

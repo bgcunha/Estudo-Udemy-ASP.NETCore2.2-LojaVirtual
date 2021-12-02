@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LojaVirtual.Controllers.Libraries.Bug_GetCurrentDirectory
+namespace LojaVirtual.Libraries.Bug_GetCurrentDirectory
 {
     public class CurrentDirectoryHelpers
     {

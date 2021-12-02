@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Controllers.Libraries.Lang;
+﻿using LojaVirtual.Libraries.Lang;
 using System.ComponentModel.DataAnnotations;
 
 

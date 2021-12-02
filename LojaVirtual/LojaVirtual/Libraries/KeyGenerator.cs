@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LojaVirtual.Controllers.Libraries
+namespace LojaVirtual.Libraries
 {
     public class KeyGenerator
     {

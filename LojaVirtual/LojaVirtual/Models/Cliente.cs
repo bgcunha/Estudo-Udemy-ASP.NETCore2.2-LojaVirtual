@@ -1,5 +1,5 @@
-﻿using LojaVirtual.Controllers.Libraries;
-using LojaVirtual.Controllers.Libraries.Lang;
+﻿using LojaVirtual.Libraries;
+using LojaVirtual.Libraries.Lang;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

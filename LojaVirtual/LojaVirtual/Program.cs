@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Controllers.Libraries.Bug_GetCurrentDirectory;
+﻿using LojaVirtual.Libraries.Bug_GetCurrentDirectory;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

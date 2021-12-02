@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Controllers.Libraries.Arquivo;
+﻿using LojaVirtual.Libraries.Arquivo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

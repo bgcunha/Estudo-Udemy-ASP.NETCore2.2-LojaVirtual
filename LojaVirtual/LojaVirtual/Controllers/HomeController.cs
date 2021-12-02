@@ -1,7 +1,7 @@
-﻿using LojaVirtual.Controllers.Libraries;
-using LojaVirtual.Controllers.Libraries.Filtros;
-using LojaVirtual.Controllers.Libraries.Login;
-using LojaVirtual.Controllers.Libraries.Sessao;
+﻿using LojaVirtual.Libraries;
+using LojaVirtual.Libraries.Filtros;
+using LojaVirtual.Libraries.Login;
+using LojaVirtual.Libraries.Sessao;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;

@@ -1,11 +1,11 @@
 ﻿
-using LojaVirtual.Controllers.Libraries.Login;
+using LojaVirtual.Libraries.Login;
 using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
-namespace LojaVirtual.Controllers.Libraries.Filtros
+namespace LojaVirtual.Libraries.Filtros
 {
     /*
      Tipo de filtro

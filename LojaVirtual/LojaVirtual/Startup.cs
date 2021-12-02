@@ -1,7 +1,7 @@
-﻿using LojaVirtual.Controllers.Libraries;
-using LojaVirtual.Controllers.Libraries.Login;
-using LojaVirtual.Controllers.Libraries.Middleware;
-using LojaVirtual.Controllers.Libraries.Sessao;
+﻿using LojaVirtual.Libraries;
+using LojaVirtual.Libraries.Login;
+using LojaVirtual.Libraries.Middleware;
+using LojaVirtual.Libraries.Sessao;
 using LojaVirtual.Database;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories;

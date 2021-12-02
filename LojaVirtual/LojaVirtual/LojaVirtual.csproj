@@ -46,7 +46,7 @@
 
 
   <ItemGroup>
-    <Compile Update="Controllers\Libraries\Lang\Mensagem.Designer.cs">
+    <Compile Update="Libraries\Lang\Mensagem.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Mensagem.resx</DependentUpon>
@@ -55,7 +55,7 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Controllers\Libraries\Lang\Mensagem.resx">
+    <EmbeddedResource Update="Libraries\Lang\Mensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mensagem.Designer.cs</LastGenOutput>
     </EmbeddedResource>

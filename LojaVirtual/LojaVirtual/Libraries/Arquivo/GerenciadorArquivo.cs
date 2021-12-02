@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
 
-namespace LojaVirtual.Controllers.Libraries.Arquivo
+namespace LojaVirtual.Libraries.Arquivo
 {
     public class GerenciadorArquivo
     {
@@ -83,7 +83,7 @@ namespace LojaVirtual.Controllers.Libraries.Arquivo
             return ImagensDefinitivo;
         }
 
-        public static void ExcluirImagemsProduto(List<Imagem> imagems)
+        public static void ExcluirImagensProduto(List<Imagem> imagems)
         {
             foreach (var imagem in imagems)
             {

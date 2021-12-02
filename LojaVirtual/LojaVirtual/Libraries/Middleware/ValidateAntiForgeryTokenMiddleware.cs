@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace LojaVirtual.Controllers.Libraries.Middleware
+namespace LojaVirtual.Libraries.Middleware
 {
     public class ValidateAntiForgeryTokenMiddleware
     {

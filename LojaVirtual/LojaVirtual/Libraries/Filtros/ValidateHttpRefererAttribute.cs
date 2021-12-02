@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
-namespace LojaVirtual.Controllers.Libraries.Filtros
+namespace LojaVirtual.Libraries.Filtros
 {
     public class ValidateHttpRefererAttribute : Attribute, IActionFilter
     {

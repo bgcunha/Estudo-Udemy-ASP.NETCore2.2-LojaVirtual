@@ -38,7 +38,7 @@ namespace LojaVirtual.Repositories
             _context.SaveChanges();
         }
 
-        public void ExcluirImagemsDoProduto(int idProduto)
+        public void ExcluirImagensDoProduto(int idProduto)
         {
             var models = _context.Imagens.Where(x=>x.ProdutoId == idProduto).ToArray();
 
@@ -48,6 +48,6 @@ namespace LojaVirtual.Repositories
             }
            
             _context.SaveChanges();
-        }
+        }        
     }
 }

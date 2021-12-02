@@ -1,5 +1,5 @@
-﻿using LojaVirtual.Controllers.Libraries.Filtros;
-using LojaVirtual.Controllers.Libraries.Lang;
+﻿using LojaVirtual.Libraries.Filtros;
+using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Models.Constants;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;

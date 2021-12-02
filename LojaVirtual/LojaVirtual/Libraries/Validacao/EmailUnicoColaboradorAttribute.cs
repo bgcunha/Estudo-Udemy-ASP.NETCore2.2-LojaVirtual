@@ -3,7 +3,7 @@ using LojaVirtual.Repositories.Contracts;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace LojaVirtual.Controllers.Libraries.Validacao
+namespace LojaVirtual.Libraries.Validacao
 {
     public class EmailUnicoColaboradorAttribute : ValidationAttribute
     {

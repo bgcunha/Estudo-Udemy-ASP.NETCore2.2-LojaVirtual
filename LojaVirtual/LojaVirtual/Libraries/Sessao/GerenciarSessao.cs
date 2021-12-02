@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace LojaVirtual.Controllers.Libraries.Sessao
+namespace LojaVirtual.Libraries.Sessao
 {
     public class GerenciarSessao
     {

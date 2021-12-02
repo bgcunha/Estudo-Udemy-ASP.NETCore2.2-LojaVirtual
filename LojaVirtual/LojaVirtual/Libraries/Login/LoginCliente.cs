@@ -1,8 +1,8 @@
-﻿using LojaVirtual.Controllers.Libraries.Sessao;
+﻿using LojaVirtual.Libraries.Sessao;
 using LojaVirtual.Models;
 using Newtonsoft.Json;
 
-namespace LojaVirtual.Controllers.Libraries.Login
+namespace LojaVirtual.Libraries.Login
 {
     public class LoginCliente
     {
