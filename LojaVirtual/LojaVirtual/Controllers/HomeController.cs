@@ -33,10 +33,9 @@ namespace LojaVirtual.Controllers
         }
 
         
-        public IActionResult Index(int? pagina, string pesquisa, string ordenacao)
-        {
-            var ViewModel = new VMIndex { Lista = _repositoryProduto.ObterTodos(pagina, pesquisa, ordenacao) };
-            return View(ViewModel);
+        public IActionResult Index()
+        {           
+            return View();
         }
 
         [HttpPost]
@@ -51,9 +50,8 @@ namespace LojaVirtual.Controllers
                 return RedirectToAction(nameof(Index));
             }
             else
-            {
-                var ViewModel = new VMIndex { Lista = _repositoryProduto.ObterTodos(pagina, pesquisa, ordenacao) };
-                return View(ViewModel);
+            {                
+                return View();
             }
         }
 

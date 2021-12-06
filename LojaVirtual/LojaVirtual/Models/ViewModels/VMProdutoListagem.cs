@@ -4,13 +4,12 @@ using X.PagedList;
 
 namespace LojaVirtual.Models.ViewModels
 {
-    public class VMIndex
+    public class VMProdutoListagem
     {
-        public NewsLatterEmail NewsLatter { get; set; }
         public IPagedList<Produto> Lista { get; set; }
-        public List<SelectListItem> Ordenacao 
+        public List<SelectListItem> Ordenacao
         {
-            get 
+            get
             {
                 return new List<SelectListItem>()
                 {
