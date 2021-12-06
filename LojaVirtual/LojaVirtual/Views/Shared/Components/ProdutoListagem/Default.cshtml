@@ -1,5 +1,5 @@
 ﻿@model VMProdutoListagem
-@{ 
+@{
     var pesquisa = Context.Request.Query["pesquisa"];
     var ordenacao = Context.Request.Query["ordenacao"].ToString();
     var action = ViewContext.RouteData.Values["action"].ToString();
@@ -49,5 +49,10 @@
 }
 else
 {
-    <span> Nenum registro encontrado</span>
+    <div class="container">
+        <br>
+        <div class="alert alert-info col-md-4 offset-md-4">
+            <strong>Opsss</strong> Não temos produtos nessa categoria!
+        </div>
+    </div>
 }
