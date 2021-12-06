@@ -3,6 +3,7 @@ using LojaVirtual.Libraries.Filtros;
 using LojaVirtual.Libraries.Login;
 using LojaVirtual.Libraries.Sessao;
 using LojaVirtual.Models;
+using LojaVirtual.Models.ViewModels;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,26 +17,30 @@ namespace LojaVirtual.Controllers
     {
         private IRepositoryCliente _repositoryCliente;
         private IRepositoryNewsLatterEmail _repositoryNewsLatter;
-        private LoginCliente _loginCliente;
+        private IRepositoryProduto _repositoryProduto;
 
+        private LoginCliente _loginCliente;
         private GerenciarEmail _gerenciarEmail;
 
-        public HomeController(IRepositoryCliente repositoryCliente, IRepositoryNewsLatterEmail repositoryNewsLatter, LoginCliente loginCliente, GerenciarEmail gerenciarEmail)
+        public HomeController(IRepositoryCliente repositoryCliente, IRepositoryNewsLatterEmail repositoryNewsLatter, IRepositoryProduto repositoryProduto, LoginCliente loginCliente, GerenciarEmail gerenciarEmail)
         {
             _repositoryCliente = repositoryCliente;
             _repositoryNewsLatter = repositoryNewsLatter;
+            _repositoryProduto = repositoryProduto;
+
             _loginCliente = loginCliente;
             _gerenciarEmail = gerenciarEmail;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        
+        public IActionResult Index(int? pagina, string pesquisa, string ordenacao)
         {
-            return View();
+            var ViewModel = new VMIndex { Lista = _repositoryProduto.ObterTodos(pagina, pesquisa, ordenacao) };
+            return View(ViewModel);
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm] NewsLatterEmail newsLatterEmail)
+        public IActionResult Index(int? pagina, string pesquisa, string ordenacao, [FromForm] NewsLatterEmail newsLatterEmail)
         {
             if (ModelState.IsValid)
             {
@@ -45,8 +50,11 @@ namespace LojaVirtual.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-            return View();          
+            else
+            {
+                var ViewModel = new VMIndex { Lista = _repositoryProduto.ObterTodos(pagina, pesquisa, ordenacao) };
+                return View(ViewModel);
+            }
         }
 
         public IActionResult Categoria()

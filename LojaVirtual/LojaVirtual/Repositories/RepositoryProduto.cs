@@ -59,6 +59,7 @@ namespace LojaVirtual.Repositories
             {
                 bancoProduto = bancoProduto.Where(a => a.Nome.Contains(pesquisa.Trim()));
             }
+
             if (ordenacao == "A")
             {
                 bancoProduto = bancoProduto.OrderBy(a => a.Nome);

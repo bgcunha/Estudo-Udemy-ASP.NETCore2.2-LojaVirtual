@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     MoverScrollOrdenacao();
     MudarOrdenacao();
     MudarImagePrincipalProduto();
@@ -14,7 +15,7 @@ function MoverScrollOrdenacao() {
     if (window.location.hash.length > 0) {
         var hash = window.location.hash;
         if (hash == "#posicao-produto") {
-            window.scrollBy(0, 473);
+            window.scrollBy(0, 490);
         }
     }
 }
