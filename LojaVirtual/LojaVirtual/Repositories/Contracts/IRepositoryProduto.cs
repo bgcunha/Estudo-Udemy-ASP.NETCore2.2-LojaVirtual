@@ -1,5 +1,6 @@
 ﻿
 using LojaVirtual.Models;
+using System.Collections.Generic;
 using X.PagedList;
 
 namespace LojaVirtual.Repositories.Contracts
@@ -13,6 +14,6 @@ namespace LojaVirtual.Repositories.Contracts
 
         Produto ObterPorId(int Id);
         IPagedList<Produto> ObterTodos(int? pagina, string pesquisa);
-        IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao);
+        IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao, IEnumerable<Categoria> categorias);
     }
 }

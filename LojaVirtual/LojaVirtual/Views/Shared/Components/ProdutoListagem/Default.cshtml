@@ -2,6 +2,7 @@
 @{ 
     var pesquisa = Context.Request.Query["pesquisa"];
     var ordenacao = Context.Request.Query["ordenacao"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
 }
 
 
@@ -43,7 +44,7 @@
             }
 
         </div>
-        @Html.PagedListPager((IPagedList)Model.Lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa, ordenacao = ordenacao }))
+        @Html.PagedListPager((IPagedList)Model.Lista, pagina => Url.Action(action, new { pagina = pagina, pesquisa = pesquisa, ordenacao = ordenacao }))
     </div>
 }
 else

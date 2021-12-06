@@ -14,9 +14,12 @@ namespace LojaVirtual.Repositories.Contracts
         void Excluir(int id);
 
         Categoria ObterPorId(int id);
+        Categoria ObterCategoria(string slug);
+        IEnumerable<Categoria> ObterCategoriasRecursivas(Categoria categoriaPai);
+
 
         IEnumerable<Categoria> ObterTodos(); 
         IPagedList<Categoria> ObterTodos(int? pagina);
-
+        
     }
 }

@@ -1,15 +1,32 @@
 ﻿
 using LojaVirtual.Models;
+using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
     public class ProdutoController : Controller
     {
-        public ProdutoController()
+        private IRepositoryProduto _repositoryProduto;
+        private IRepositoryCategoria _repositoryCategoria;
+
+        public ProdutoController(IRepositoryProduto repositoryProduto, IRepositoryCategoria repositoryCategoria)
         {
+            _repositoryProduto = repositoryProduto;
+            _repositoryCategoria = repositoryCategoria;
         }
 
+        [HttpGet]
+        [Route("/Produto/Categoria/{slug}")]
+        public  IActionResult ListagemCategoria()
+        {
+            return View();
+        }
+        
+
+        /****************************************************/
         public ActionResult Visualizar()
         {
             var produto = GetProduto();

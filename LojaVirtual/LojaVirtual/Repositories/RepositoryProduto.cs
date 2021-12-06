@@ -4,6 +4,7 @@ using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
 
@@ -45,10 +46,10 @@ namespace LojaVirtual.Repositories
 
         public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa)
         {
-            return ObterTodos(pagina, pesquisa, "A");
+            return ObterTodos(pagina, pesquisa, "A", null);
         }
 
-        public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao)
+        public IPagedList<Produto> ObterTodos(int? pagina, string pesquisa, string ordenacao, IEnumerable<Categoria> categorias)
         {
             int RegistroPorPagina = _config.GetValue<int>("RegistrosPorPagina");
 
@@ -71,6 +72,11 @@ namespace LojaVirtual.Repositories
             if (ordenacao == "MA")
             {
                 bancoProduto = bancoProduto.OrderByDescending(a => a.Valor);
+            }
+
+            if (categorias != null && categorias.Count() > 0)
+            {
+                bancoProduto = bancoProduto.Where(prod=> categorias.Select(cat => cat.Id).Contains(prod.CategoriaId));
             }
 
             return bancoProduto.Include(a => a.Imagens).ToPagedList<Produto>(NumeroPagina, RegistroPorPagina);
