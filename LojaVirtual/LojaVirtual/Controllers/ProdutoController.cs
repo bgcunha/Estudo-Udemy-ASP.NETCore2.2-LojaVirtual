@@ -25,26 +25,10 @@ namespace LojaVirtual.Controllers
             var categoria = _repositoryCategoria.ObterCategoria(slug);
             return View(categoria);
         }
-        
-
-        /****************************************************/
-        public ActionResult Visualizar()
+                
+        public ActionResult Visualizar(int id)
         {
-            var produto = GetProduto();
-
-            return View(produto);            
-        }
-
-        private Produto GetProduto()
-        {
-            return new Produto() 
-            {
-                Id = 1,
-                Nome = "Celular Xiaomi",
-                Descricao = "4 Câmeras",
-                Valor = 1299.90M,
-            };
-
+            return View(_repositoryProduto.ObterPorId(id));
         }
     }
 }
