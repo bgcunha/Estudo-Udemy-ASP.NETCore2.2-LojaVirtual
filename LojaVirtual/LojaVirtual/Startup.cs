@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Mail;
 using LojaVirtual.Libraries.Cookie;
+using LojaVirtual.Libraries.CarrinhoCompra;
 
 namespace LojaVirtual
 {
@@ -74,6 +75,7 @@ namespace LojaVirtual
 
             services.AddScoped<GerenciarSessao>();
             services.AddScoped<GerenciarCookie>();
+            services.AddScoped<GerenciarCarrinho>();
             services.AddScoped<LoginCliente>();
             services.AddScoped<LoginColaborador>();
             services.AddScoped<NewsLatterEmail>();

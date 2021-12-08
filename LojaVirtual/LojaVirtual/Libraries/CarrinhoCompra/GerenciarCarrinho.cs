@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Libraries.Cookie;
+using LojaVirtual.Models.ProdutoAgregador;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             _gerenciarCookie = gerenciarCookie;
         }
 
-        public void Cadastriar(ItemCarrinho itemCarrinho)
+        public void Cadastriar(ProdutoItemCarrinho itemCarrinho)
         {
-            var Itens = new List<ItemCarrinho>();
+            var Itens = new List<ProdutoItemCarrinho>();
 
             if (_gerenciarCookie.Existe(Key))
             {
@@ -44,7 +45,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             Salvar(Itens);
         }
 
-        public void Atualizar(ItemCarrinho itemCarrinho)
+        public void Atualizar(ProdutoItemCarrinho itemCarrinho)
         {
             var Itens = Consultar();
 
@@ -57,7 +58,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
         }
 
-        public void Remover(ItemCarrinho itemCarrinho)
+        public void Remover(ProdutoItemCarrinho itemCarrinho)
         {
             var Itens = Consultar();
 
@@ -70,19 +71,19 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }                
         }
 
-        public List<ItemCarrinho> Consultar()
+        public List<ProdutoItemCarrinho> Consultar()
         {
             if (_gerenciarCookie.Existe(Key))
             {
                 var Cookies = _gerenciarCookie.Consultar(Key);
 
-                return JsonConvert.DeserializeObject<List<ItemCarrinho>>(Cookies);
+                return JsonConvert.DeserializeObject<List<ProdutoItemCarrinho>>(Cookies);
             }
 
-            return new List<ItemCarrinho>();
+            return new List<ProdutoItemCarrinho>();
         }
 
-        public void Salvar(List<ItemCarrinho> itens)
+        public void Salvar(List<ProdutoItemCarrinho> itens)
         {
             var Cookie = JsonConvert.SerializeObject(itens);
 
@@ -98,11 +99,5 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
         {
             _gerenciarCookie.Remover(Key);
         }
-    }
-
-    public class ItemCarrinho
-    {
-        public int? Id { get; set; }
-        public int Quantidade { get; set; }
     }
 }

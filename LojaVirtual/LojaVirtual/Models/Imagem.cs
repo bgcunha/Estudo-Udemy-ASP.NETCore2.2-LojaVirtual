@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LojaVirtual.Models.ProdutoAgregador;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Models
 {
