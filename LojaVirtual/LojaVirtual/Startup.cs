@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Mail;
+using LojaVirtual.Libraries.Cookie;
 
 namespace LojaVirtual
 {
@@ -72,6 +73,7 @@ namespace LojaVirtual
             });
 
             services.AddScoped<GerenciarSessao>();
+            services.AddScoped<GerenciarCookie>();
             services.AddScoped<LoginCliente>();
             services.AddScoped<LoginColaborador>();
             services.AddScoped<NewsLatterEmail>();
