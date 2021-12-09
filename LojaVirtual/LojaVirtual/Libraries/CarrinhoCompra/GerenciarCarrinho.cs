@@ -19,17 +19,15 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
                
         public void Cadastrar(ProdutoItemCarrinho itemCarrinho)
         {
-            var Itens = new List<ProdutoItemCarrinho>();
-
+            List<ProdutoItemCarrinho> Lista;
             if (_gerenciarCookie.Existe(Key))
             {
-                Itens = Consultar();
-
-                var ItemLocalizado = Itens.SingleOrDefault(x => x.Id == itemCarrinho.Id);
+                Lista = Consultar();
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == itemCarrinho.Id);
 
                 if (ItemLocalizado == null)
                 {
-                    Itens.Add(itemCarrinho);
+                    Lista.Add(itemCarrinho);
                 }
                 else
                 {
@@ -37,12 +35,12 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
                 }
             }
             else
-            {    
-                
-                Itens.Add(itemCarrinho);
+            {
+                Lista = new List<ProdutoItemCarrinho>();
+                Lista.Add(itemCarrinho);
             }
 
-            Salvar(Itens);
+            Salvar(Lista);
         }
 
         public void Atualizar(ProdutoItemCarrinho itemCarrinho)
@@ -75,11 +73,10 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
         {
             if (_gerenciarCookie.Existe(Key))
             {
-                var Cookies = _gerenciarCookie.Consultar(Key);
-
-                return JsonConvert.DeserializeObject<List<ProdutoItemCarrinho>>(Cookies);
+                string valor = _gerenciarCookie.Consultar(Key);
+                return JsonConvert.DeserializeObject<List<ProdutoItemCarrinho>>(valor);
             }
-           
+            
             return new List<ProdutoItemCarrinho>();            
         }
 

@@ -7,6 +7,6 @@ namespace LojaVirtual.Models.ProdutoAgregador
 {
     public class ProdutoItemCarrinho : Produto
     {
-        public int QuantidadeProutoCarrinho { get; set; }
+        public int QuantidadeProdutoCarrinho { get; set; }
     }
 }
