@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Libraries;
+﻿using LojaVirtual.Libraries.Email;
 using LojaVirtual.Libraries.Login;
 using LojaVirtual.Libraries.Middleware;
 using LojaVirtual.Libraries.Sessao;
@@ -17,6 +17,8 @@ using System.Net;
 using System.Net.Mail;
 using LojaVirtual.Libraries.Cookie;
 using LojaVirtual.Libraries.CarrinhoCompra;
+using AutoMapper;
+using LojaVirtual.Libraries.AutoMapper;
 
 namespace LojaVirtual
 {
@@ -31,6 +33,12 @@ namespace LojaVirtual
 
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
+            * AutoMapper
+            */
+
+            services.AddAutoMapper(config => config.AddProfile<MappingProfile>());
+
             services.AddHttpContextAccessor();
             services.AddScoped<IRepositoryCliente, RepositoryCliente>();
             services.AddScoped<IRepositoryColaborador, RepositoryColaborador>();
