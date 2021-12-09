@@ -16,8 +16,8 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
         {
             _gerenciarCookie = gerenciarCookie;
         }
-
-        public void Cadastriar(ProdutoItemCarrinho itemCarrinho)
+               
+        public void Cadastrar(ProdutoItemCarrinho itemCarrinho)
         {
             var Itens = new List<ProdutoItemCarrinho>();
 
@@ -27,19 +27,19 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
                 var ItemLocalizado = Itens.SingleOrDefault(x => x.Id == itemCarrinho.Id);
 
-                if (ItemLocalizado != null)
+                if (ItemLocalizado == null)
                 {
                     Itens.Add(itemCarrinho);
                 }
-                else 
+                else
                 {
-                    itemCarrinho.Quantidade += itemCarrinho.Quantidade;
-                }                   
+                    ItemLocalizado.QuantidadeProdutoCarrinho = ItemLocalizado.QuantidadeProdutoCarrinho + 1;
+                }
             }
             else
-            {
-               
-                Itens.Add(itemCarrinho);                
+            {    
+                
+                Itens.Add(itemCarrinho);
             }
 
             Salvar(Itens);
@@ -53,7 +53,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
             if (ItemLocalizado != null)
             {
-                ItemLocalizado.Quantidade = itemCarrinho.Quantidade;
+                ItemLocalizado.QuantidadeProdutoCarrinho = itemCarrinho.QuantidadeProdutoCarrinho;
                 Salvar(Itens);
             }
         }
@@ -64,11 +64,11 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
             var ItemLocalizado = Itens.SingleOrDefault(x=>x.Id == itemCarrinho.Id);
 
-            if (ItemLocalizado != null) 
+            if (ItemLocalizado != null)
             {
                 Itens.Remove(ItemLocalizado);
                 Salvar(Itens);
-            }                
+            }
         }
 
         public List<ProdutoItemCarrinho> Consultar()
@@ -79,8 +79,8 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
                 return JsonConvert.DeserializeObject<List<ProdutoItemCarrinho>>(Cookies);
             }
-
-            return new List<ProdutoItemCarrinho>();
+           
+            return new List<ProdutoItemCarrinho>();            
         }
 
         public void Salvar(List<ProdutoItemCarrinho> itens)
