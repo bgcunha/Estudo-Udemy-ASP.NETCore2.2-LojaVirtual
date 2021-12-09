@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Libraries;
+using LojaVirtual.Libraries.Email;
 using LojaVirtual.Libraries.Filtros;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Models.Constants;

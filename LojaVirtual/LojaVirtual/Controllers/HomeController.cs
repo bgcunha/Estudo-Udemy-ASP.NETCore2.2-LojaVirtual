@@ -1,9 +1,7 @@
-﻿using LojaVirtual.Libraries;
+﻿using LojaVirtual.Libraries.Email;
 using LojaVirtual.Libraries.Filtros;
 using LojaVirtual.Libraries.Login;
-using LojaVirtual.Libraries.Sessao;
 using LojaVirtual.Models;
-using LojaVirtual.Models.ViewModels;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -164,11 +162,6 @@ namespace LojaVirtual.Controllers
                 return RedirectToAction(nameof(CadastroCliente));
             }
 
-            return View();
-        }
-
-        public IActionResult CarrinhoCompras()
-        {
             return View();
         }
     }
