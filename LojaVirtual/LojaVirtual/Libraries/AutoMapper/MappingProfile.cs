@@ -7,7 +7,7 @@ namespace LojaVirtual.Libraries.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<Produto, ProdutoItemCarrinho>();
+            CreateMap<Produto, ProdutoItem>();
         }
     }
 }

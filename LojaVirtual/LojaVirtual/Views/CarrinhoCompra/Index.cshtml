@@ -1,4 +1,4 @@
-﻿@model List<LojaVirtual.Models.ProdutoAgregador.ProdutoItemCarrinho>
+﻿@model List<LojaVirtual.Models.ProdutoAgregador.ProdutoItem>
 @{
     ViewData["Title"] = "Index";
 }
@@ -33,20 +33,24 @@
                                                 <dt>Size: </dt>
                                                 <dd>XXL</dd>
                                             </dl>
-                                            <dl class="dlist-inline small">
-                                                <dt>Quantidade: </dt>
-                                                <dd>@item.QuantidadeProdutoCarrinho</dd>
-                                            </dl>
                                         </figcaption>
                                     </figure>
                                 </td>
                                 <td>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
+                                    <div class="col-auto">
+                                        <div class="input-group mb-2">
+                                            <input type="hidden" class="inputProdutoId" value="@item.Id" />
+                                            <input type="hidden" class="inputQuantidadeEstoque" value="@item.Quantidade" />
+                                            <input type="hidden" class="inputValorUnitario" value="@item.Valor" />
+                                            <div class="input-group-prepend">
+                                                <a href="#" class="btn btn-primary diminuir"> - </a>
+                                            </div>
+                                            <input type="text" style="width: 60px; text-align: center" readonly="readonly" class="form-control inputQuantidadeProdutoCarrinho" value="@item.QuantidadeProdutoCarrinho">
+                                            <div class="input-group-append">
+                                                <a href="#" class="btn btn-primary aumentar"> + </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="price-wrap">
@@ -55,7 +59,7 @@
                                     </div>
                                 </td>
                                 <td class="text-right">
-                                    <a asp-controller="CarrinhoCompra" asp-action="Remover" asp-route-id="@item.Id" class="btn btn-outline-danger"> × Remove</a>
+                                    <a asp-controller="CarrinhoCompra" asp-action="RemoverItem" asp-route-id="@item.Id" class="btn btn-outline-danger"> × Remove</a>
                                 </td>
                             </tr>
                         }
@@ -114,5 +118,7 @@
                 </div> <!-- code-wrap.// -->
             </aside>
         </div> <!-- row.// -->
+
     </section>
+
 </div>

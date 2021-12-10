@@ -17,9 +17,9 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             _gerenciarCookie = gerenciarCookie;
         }
                
-        public void Cadastrar(ProdutoItemCarrinho itemCarrinho)
+        public void Cadastrar(ProdutoItem itemCarrinho)
         {
-            List<ProdutoItemCarrinho> Lista;
+            List<ProdutoItem> Lista;
             if (_gerenciarCookie.Existe(Key))
             {
                 Lista = Consultar();
@@ -36,14 +36,14 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
             else
             {
-                Lista = new List<ProdutoItemCarrinho>();
+                Lista = new List<ProdutoItem>();
                 Lista.Add(itemCarrinho);
             }
 
             Salvar(Lista);
         }
 
-        public void Atualizar(ProdutoItemCarrinho itemCarrinho)
+        public void Atualizar(ProdutoItem itemCarrinho)
         {
             var Itens = Consultar();
 
@@ -56,7 +56,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
         }
 
-        public void Remover(ProdutoItemCarrinho itemCarrinho)
+        public void Remover(ProdutoItem itemCarrinho)
         {
             var Itens = Consultar();
 
@@ -69,18 +69,18 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
         }
 
-        public List<ProdutoItemCarrinho> Consultar()
+        public List<ProdutoItem> Consultar()
         {
             if (_gerenciarCookie.Existe(Key))
             {
                 string valor = _gerenciarCookie.Consultar(Key);
-                return JsonConvert.DeserializeObject<List<ProdutoItemCarrinho>>(valor);
+                return JsonConvert.DeserializeObject<List<ProdutoItem>>(valor);
             }
             
-            return new List<ProdutoItemCarrinho>();            
+            return new List<ProdutoItem>();            
         }
 
-        public void Salvar(List<ProdutoItemCarrinho> itens)
+        public void Salvar(List<ProdutoItem> itens)
         {
             var Cookie = JsonConvert.SerializeObject(itens);
 

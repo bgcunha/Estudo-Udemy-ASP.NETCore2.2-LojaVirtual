@@ -20,16 +20,16 @@ namespace LojaVirtual.Controllers
             _mapper = mapper;
         }
         public IActionResult Index()
-        {       
-            List<ProdutoItemCarrinho> ProdutoItemCarrinhoNoCarrinho = _gerenciarCarrinho.Consultar();
+        {
+            List<Models.ProdutoAgregador.ProdutoItem> ProdutoItemCarrinhoNoCarrinho = _gerenciarCarrinho.Consultar();
 
-            List<ProdutoItemCarrinho> ProdutoItemCarrinhoCompleto = new List<ProdutoItemCarrinho>();
+            List<Models.ProdutoAgregador.ProdutoItem> ProdutoItemCarrinhoCompleto = new List<Models.ProdutoAgregador.ProdutoItem>();
 
             foreach (var item in ProdutoItemCarrinhoNoCarrinho)
             {
                 Produto Produto = _repositoryProduto.ObterPorId(item.Id);
 
-                ProdutoItemCarrinho ProdutoItemCarrinho = _mapper.Map<ProdutoItemCarrinho>(Produto);
+                Models.ProdutoAgregador.ProdutoItem ProdutoItemCarrinho = _mapper.Map<Models.ProdutoAgregador.ProdutoItem>(Produto);
                 ProdutoItemCarrinho.QuantidadeProdutoCarrinho = item.QuantidadeProdutoCarrinho;
 
                 ProdutoItemCarrinhoCompleto.Add(ProdutoItemCarrinho);
@@ -37,7 +37,7 @@ namespace LojaVirtual.Controllers
 
             return View(ProdutoItemCarrinhoCompleto);
         }        
-        public IActionResult Adicionar(int id)
+        public IActionResult AdicionarItem(int id)
         {
             var Produto = _repositoryProduto.ObterPorId(id);
 
@@ -47,7 +47,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var Item = new ProdutoItemCarrinho() { Id = id, QuantidadeProdutoCarrinho = 1 };
+                var Item = new Models.ProdutoAgregador.ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 };
                 _gerenciarCarrinho.Cadastrar(Item);
 
                 return RedirectToAction(nameof(Index));
@@ -55,13 +55,13 @@ namespace LojaVirtual.Controllers
         }
         public IActionResult AterarQuantidade(int id, int quantidade)
         {
-            var Item = new ProdutoItemCarrinho() { Id = id, QuantidadeProdutoCarrinho = quantidade};
+            var Item = new Models.ProdutoAgregador.ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = quantidade};
             _gerenciarCarrinho.Atualizar(Item);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Remover(int id)
+        public IActionResult RemoverItem(int id)
         {
-            _gerenciarCarrinho.Remover(new ProdutoItemCarrinho() { Id = id });
+            _gerenciarCarrinho.Remover(new Models.ProdutoAgregador.ProdutoItem() { Id = id });
             return RedirectToAction(nameof(Index));
         }
     }
