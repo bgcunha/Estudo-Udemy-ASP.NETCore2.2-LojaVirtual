@@ -1,11 +1,15 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     MoverScrollOrdenacao();
     MudarOrdenacao();
     MudarImagePrincipalProduto();
     MudarQuantidadeProdutoCarrinho();
 });
 
+function NumberToReal(numero) {
+    var numero = numero.toFixed(2).split('.');
+    numero[0] = "R$" + numero[0].split(/(?=(?:...)*$)/).join('.');
+    return numero.join(',');
+}
 
 function MudarQuantidadeProdutoCarrinho() {
     $("#order .btn-primary").click(function () {
@@ -25,7 +29,7 @@ function LogicaMudarQuantidadeProdutoUnitarioCarrinho(operacao, botao) {
 
     var produtoId = pai.find(".inputProdutoId").val();
     var quantidadeEstoque = parseInt( pai.find(".inputQuantidadeEstoque").val());
-    var valorUnitario = parseFloat( pai.find(".inputValorUnitario").val());
+    var valorUnitario = parseFloat( pai.find(".inputValorUnitario").val().replace(",", ".") );
 
     var campoQuantidadeProdutoCarrinho = pai.find(".inputQuantidadeProdutoCarrinho");
     var quantidadeProdutoCarrinho = parseInt(campoQuantidadeProdutoCarrinho.val());
@@ -54,8 +58,8 @@ function LogicaMudarQuantidadeProdutoUnitarioCarrinho(operacao, botao) {
     }
 
     var totalAtualizado = valorUnitario * quantidadeProdutoCarrinho;
-    campoValor.text(totalAtualizado);
-    campoValor.text(valorUnitario * quantidadeProdutoCarrinho);
+    campoValor.text(NumberToReal(totalAtualizado));
+    
     //TODO - Atualizar o subtotal do produto
 }
 
