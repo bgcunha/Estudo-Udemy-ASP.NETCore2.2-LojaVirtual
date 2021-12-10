@@ -5,9 +5,9 @@
     MudarQuantidadeProdutoCarrinho();
 });
 
-function numberToReal(numero) {
+function NumberToReal(numero) {
     var numero = numero.toFixed(2).split('.');
-    numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+    numero[0] = "R$" + numero[0].split(/(?=(?:...)*$)/).join('.');
     return numero.join(',');
 }
 
@@ -74,7 +74,7 @@ function AtualizarQuantidadeEValor(produto) {
     produto.campoQuantidadeProdutoCarrinho.val(produto.quantidadeProdutoCarrinhoNova);
 
     var resultado = produto.valorUnitario * produto.quantidadeProdutoCarrinhoNova;
-    produto.campoValor.text(numberToReal(resultado));
+    produto.campoValor.text(NumberToReal(resultado));
 }
 
 function MudarImagePrincipalProduto() {
