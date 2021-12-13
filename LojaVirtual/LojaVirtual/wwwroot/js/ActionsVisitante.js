@@ -22,8 +22,6 @@ function MudarQuantidadeProdutoCarrinho() {
     });
 }
 
-
-
 function OrquestradorDeAcoesProduto(operacao, botao) {
     /*
      * Carregamento dos valores
@@ -58,6 +56,8 @@ function AlteracoesVisuaisProdutoCarrinho(produto, operacao) {
             produto.quantidadeProdutoCarrinhoNova = produto.quantidadeProdutoCarrinhoAntiga + 1;
 
             AtualizarQuantidadeEValor(produto);
+
+            AJAXComunicarAlteracaoQuantidadeProduto(produto);
         }
     } else if (operacao == "diminuir") {
         if (produto.quantidadeProdutoCarrinhoAntiga == 1) {
@@ -66,8 +66,27 @@ function AlteracoesVisuaisProdutoCarrinho(produto, operacao) {
             produto.quantidadeProdutoCarrinhoNova = produto.quantidadeProdutoCarrinhoAntiga - 1;
 
             AtualizarQuantidadeEValor(produto);
+
+            AJAXComunicarAlteracaoQuantidadeProduto(produto);
         }
     }
+}
+
+function AJAXComunicarAlteracaoQuantidadeProduto(produto) {
+    $.ajax({
+        type: "GET",
+        url: "/CarrinhoCompra/AlterarQuantidade?id=" + produto.produtoId + "&quantidade=" + produto.quantidadeProdutoCarrinhoNova,
+        error: function (data) {
+            alert(data.responseJSON.mensagem);
+
+            //Rollback
+            produto.quantidadeProdutoCarrinhoNova = produto.quantidadeProdutoCarrinhoAntiga;
+            AtualizarQuantidadeEValor(produto);
+        },
+        success: function () {
+
+        }
+    });
 }
 
 function AtualizarQuantidadeEValor(produto) {

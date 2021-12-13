@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LojaVirtual.Libraries.CarrinhoCompra;
+using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Models.ProdutoAgregador;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -53,11 +54,22 @@ namespace LojaVirtual.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        public IActionResult AterarQuantidade(int id, int quantidade)
+        public IActionResult AlterarQuantidade(int id, int quantidade)
         {
+            var Produto =_repositoryProduto.ObterPorId(id);
+
+            if (quantidade < 1)
+            {
+                return BadRequest(new { mensagem = Mensagem.MSG_E007 });
+            }
+            else if (quantidade > Produto.Quantidade)
+            {
+                return BadRequest(new { mensagem = Mensagem.MSG_E008 });
+            }
+
             var Item = new Models.ProdutoAgregador.ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = quantidade};
             _gerenciarCarrinho.Atualizar(Item);
-            return RedirectToAction(nameof(Index));
+            return Ok(new { mensagem = Mensagem.MSG_SSALVO });
         }
         public IActionResult RemoverItem(int id)
         {
