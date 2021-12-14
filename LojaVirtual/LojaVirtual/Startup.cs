@@ -19,6 +19,7 @@ using LojaVirtual.Libraries.Cookie;
 using LojaVirtual.Libraries.CarrinhoCompra;
 using AutoMapper;
 using LojaVirtual.Libraries.AutoMapper;
+using WSCorreios;
 
 namespace LojaVirtual
 {
@@ -63,7 +64,11 @@ namespace LojaVirtual
                 };
 
                 return smtp;
+            });
 
+            services.AddScoped<CalcPrecoPrazoWSSoap>(options => {
+                var servico = new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap);
+                return servico;
             });
 
             services.AddScoped<GerenciarEmail>();            
