@@ -1,6 +1,7 @@
 ﻿@model List<LojaVirtual.Models.ProdutoAgregador.ProdutoItem>
 @{
     ViewData["Title"] = "Index";
+    decimal SubTotal = 0;
 }
 
 <div class="container">
@@ -54,10 +55,14 @@
                                         </div>
                                     </div>
                                 </td>
+                                @{ 
+                                    var TotalItem = item.Valor * item.QuantidadeProdutoCarrinho;
+                                    SubTotal += TotalItem;
+                                }
                                 <td>
                                     <div class="price-wrap">
-                                        <var class="price">@((item.Valor * item.QuantidadeProdutoCarrinho).ToString("C"))</var>
-                                        <small class="text-muted">(@item.Valor.ToString("C") cada)</small>
+                                        <var class="price">@(TotalItem.ToString("C"))</var>
+                                        <small class="text-muted">(@item.Valor.ToString("C") /cada)</small>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -106,7 +111,7 @@
                     <div class="box">
                         <dl class="dlist-align">
                             <dt>Subtotal: </dt>
-                            <dd class="text-right">R$ 120,00</dd>
+                            <dd class="text-right subtotal">@SubTotal.ToString("C")</dd>
                         </dl>
                         <dl class="dlist-align">
                             <dt>Frete:</dt>
