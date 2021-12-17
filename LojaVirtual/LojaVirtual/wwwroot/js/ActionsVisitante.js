@@ -14,22 +14,33 @@ function MascaraCEP() {
 function AJAXCalcularFrete() {
     $(".btn-calcular-frete").click(function () {
         var cep = $(".cep").val().replace(".", "").replace("-", "");
-
-        //TODO - Fazer uma requisição AJAX.
-
+                
         $.ajax({
             type: "GET",
             url: "/CarrinhoCompra/CalcularFrete?cepDestino=" + cep,
-            error: function () {
-
+            error: function (data) {
+                MostrarMensagemDeErro("Opps! Tivemos um erro ao obter o Frete..." + data.Message);
+                console.info(data);
             },
-            success: function () {
-                
+            success: function (data) {
+                $(".container-frete").html("");
+
+                html = "";
+                for (var i = 0; i < data.length; i++) {
+                    var tipoFrete = data[i].tipoFrete;
+                    var valor = data[i].valor;
+                    var prazo = data[i].prazo;
+
+                    html += "<dl class=\"dlist-align\"><dt><input type=\"radio\" name=\"frete\" value=\"" + tipoFrete + "\" /></dt><dd>" + tipoFrete + " - " + numberToReal(valor) + " (" + prazo + " dias últeis)</dd></dl>";
+                }
+
+                $(".container-frete").html(html);
+                console.info(data);
             }
         });
-
     });
 }
+
 function NumberToReal(numero) {
     var numero = numero.toFixed(2).split('.');
     numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
