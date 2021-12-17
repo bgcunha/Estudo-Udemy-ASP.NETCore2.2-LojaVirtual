@@ -31,7 +31,9 @@ function AJAXCalcularFrete() {
                     var valor = data[i].valor;
                     var prazo = data[i].prazo;
 
-                    html += "<dl class=\"dlist-align\"><dt><input type=\"radio\" name=\"frete\" value=\"" + tipoFrete + "\" /></dt><dd>" + tipoFrete + " - " + numberToReal(valor) + " (" + prazo + " dias últeis)</dd></dl>";
+                    html += "<dl class=\"dlist-align\"><dt><input type=\"radio\" name=\"frete\" value=\"" + tipoFrete + "\" /></dt><dd>" + tipoFrete + " - " + NumberToReal(valor) + " (" + prazo + " dias últeis)</dd></dl>";
+
+                    console.info(html);
                 }
 
                 $(".container-frete").html(html);
