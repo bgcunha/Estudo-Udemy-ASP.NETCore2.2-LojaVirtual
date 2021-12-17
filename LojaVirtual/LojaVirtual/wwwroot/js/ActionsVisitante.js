@@ -3,18 +3,24 @@
     MudarOrdenacao();
     MudarImagePrincipalProduto();
     MudarQuantidadeProdutoCarrinho();
-    MascaraCEP();
+    AcaoCalcularFreteBTN();
     AJAXCalcularFrete();
 });
-
 function MascaraCEP() {
     $(".cep").mask("00.000-000");
 }
+function AcaoCalcularFreteBTN() {
+    $(".btn-calcular-frete").click(function () {
+        AJAXCalcularFrete();
+    });
+}
 
 function AJAXCalcularFrete() {
-    $(".btn-calcular-frete").click(function () {
-        var cep = $(".cep").val().replace(".", "").replace("-", "");
-                
+    var cep = $(".cep").val().replace(".", "").replace("-", "");
+
+    if (cep.length == 8) {
+        $(".container-frete").html("<img src='\img\loading.gif' />");
+
         $.ajax({
             type: "GET",
             url: "/CarrinhoCompra/CalcularFrete?cepDestino=" + cep,
@@ -23,24 +29,23 @@ function AJAXCalcularFrete() {
                 console.info(data);
             },
             success: function (data) {
-                $(".container-frete").html("");
-
                 html = "";
+
                 for (var i = 0; i < data.length; i++) {
                     var tipoFrete = data[i].tipoFrete;
                     var valor = data[i].valor;
                     var prazo = data[i].prazo;
 
                     html += "<dl class=\"dlist-align\"><dt><input type=\"radio\" name=\"frete\" value=\"" + tipoFrete + "\" /></dt><dd>" + tipoFrete + " - " + NumberToReal(valor) + " (" + prazo + " dias últeis)</dd></dl>";
-
-                    console.info(html);
                 }
 
                 $(".container-frete").html(html);
                 console.info(data);
             }
         });
-    });
+    } else {
+        MostrarMensagemDeErro("Digite um CEP válido para calcular o frete!");
+    }
 }
 
 function NumberToReal(numero) {
@@ -125,7 +130,7 @@ function AJAXComunicarAlteracaoQuantidadeProduto(produto) {
             AtualizarQuantidadeEValor(produto);
         },
         success: function () {
-
+            AJAXCalcularFrete();
         }
     });
 }
