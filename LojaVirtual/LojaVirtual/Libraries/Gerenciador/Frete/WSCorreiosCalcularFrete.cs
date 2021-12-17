@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Models;
+using LojaVirtual.Models.Constants;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -61,9 +62,9 @@ namespace LojaVirtual.Libraries.Gerenciador.Frete
             {
                 return new ValorPrazoFrete()
                 {
-                    TipoFrete = tipoFrete,
+                    TipoFrete = TipoFreteConstant.GetNames(tipoFrete),
                     Prazo = int.Parse(resultado.Servicos[0].PrazoEntrega),
-                    Valor = double.Parse(resultado.Servicos[0].Valor.Replace(".", "").Replace(",", "."))
+                    Valor = double.Parse(resultado.Servicos[0].Valor.Replace(".", ""))
                 };
             } 
             else if(resultado.Servicos[0].Erro == "008" || resultado.Servicos[0].Erro == "-888")
