@@ -20,6 +20,7 @@ using LojaVirtual.Libraries.CarrinhoCompra;
 using AutoMapper;
 using LojaVirtual.Libraries.AutoMapper;
 using WSCorreios;
+using LojaVirtual.Libraries.Gerenciador.Frete;
 
 namespace LojaVirtual
 {
@@ -71,8 +72,11 @@ namespace LojaVirtual
                 return servico;
             });
 
-            services.AddScoped<GerenciarEmail>();            
-
+            services.AddScoped<GerenciarEmail>();
+            services.AddScoped<GerenciarCookie>();
+            services.AddScoped<GerenciarCarrinho>();
+            services.AddScoped<CalcularPacote>();
+            services.AddScoped<WSCorreiosCalcularFrete>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -86,9 +90,7 @@ namespace LojaVirtual
 
             });
 
-            services.AddScoped<GerenciarSessao>();
-            services.AddScoped<GerenciarCookie>();
-            services.AddScoped<GerenciarCarrinho>();
+            services.AddScoped<GerenciarSessao>();            
             services.AddScoped<LoginCliente>();
             services.AddScoped<LoginColaborador>();
             services.AddScoped<NewsLatterEmail>();

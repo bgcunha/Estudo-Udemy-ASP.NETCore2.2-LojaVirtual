@@ -3,8 +3,33 @@
     MudarOrdenacao();
     MudarImagePrincipalProduto();
     MudarQuantidadeProdutoCarrinho();
+    MascaraCEP();
+    AJAXCalcularFrete();
 });
 
+function MascaraCEP() {
+    $(".cep").mask("00.000-000");
+}
+
+function AJAXCalcularFrete() {
+    $(".btn-calcular-frete").click(function () {
+        var cep = $(".cep").val().replace(".", "").replace("-", "");
+
+        //TODO - Fazer uma requisição AJAX.
+
+        $.ajax({
+            type: "GET",
+            url: "/CarrinhoCompra/CalcularFrete?cepDestino=" + cep,
+            error: function () {
+
+            },
+            success: function () {
+                
+            }
+        });
+
+    });
+}
 function NumberToReal(numero) {
     var numero = numero.toFixed(2).split('.');
     numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
